@@ -46,9 +46,9 @@ const Portfolio = () => {
   ];
 
   const experiences = [
-    { title: 'HSBC - Quantitative Research Project', period: 'Oct 2025 - Present', description: 'ALM simulator for retirement portfolio strategies.', icon: TrendingUp, color: 'from-red-500 to-orange-500' },
-    { title: 'Assurances Crédit Mutuel - Actuarial Intern', period: 'Jun - Aug 2025', description: 'Developed a life insurance projection model in VBA OOP.', icon: BarChart3, color: 'from-blue-500 to-cyan-500' },
-    { title: 'Forum Trium ENSAE - Vice-President', period: 'May 2025 - Present', description: 'Coordinated the 34th edition, managing corporate relations.', icon: Briefcase, color: 'from-purple-500 to-pink-500' }
+    { title: 'HSBC - Quantitative Research Project', period: 'Oct 2025 - Present', description: ' Our team of four students is currently developing a Python-based simulation tool for retirement investing as part of a year-long project for HSBC. The project will leverage an Asset-Liability Management (ALM) framework. Our goal will be to apply stochastic modeling and portfolio optimization to balance future retiree cash-flow needs with long-term performance objectives.', icon: TrendingUp, color: 'from-red-500 to-orange-500' },
+    { title: 'Assurances Crédit Mutuel - Actuarial Intern', period: 'Jun - Aug 2025', description: 'During my internship, I contributed to the development and automation of a Life Insurance Projection Model using Object-Oriented VBA. My work on building and optimizing several key modules directly enhanced the tool\'\s accuracy, efficiency, and usability for the analyst team. This role was a valuable opportunity to apply my skills in financial modeling, risk evaluation, and quantitative methods in a real-world professional setting.', icon: BarChart3, color: 'from-blue-500 to-cyan-500' },
+    { title: 'Forum Trium ENSAE - Vice-President', period: 'May 2025 - Present', description: 'As the lead organizer for Forum Trium 2025, I orchestrated a major event connecting 2,000 students with 200 companies. My responsibilities covered a wide spectrum: I managed and coordinated several cross-functional teams, oversaw the entire logistics chain, and steered the corporate partnership strategy. Alongside these team-based duties, I am solely responsible for implementing the virtual edition on the Seekube platform, a project dedicated to facilitating targeted interviews between students and recruiters.', icon: Briefcase, color: 'from-purple-500 to-pink-500' }
   ];
 
   const handleLaptopClick = () => { if (stage === 'desk' && !isZooming) { setIsZooming(true); setTimeout(() => { setStage('lockscreen'); setIsZooming(false); }, 1000); } };
@@ -75,10 +75,15 @@ const Portfolio = () => {
   );
 
   return (
-<div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 animate-gradient'} transition-all duration-500 overflow-hidden`}>      <div className="fixed top-6 right-6 flex items-center gap-3 z-[100]">
-        {(stage !== 'desk' || showSkills) && (<button onClick={handleBack} className={`px-4 py-2 backdrop-blur-xl ${darkMode ? 'bg-gray-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all text-sm font-medium border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>← Back</button>)}
-        <button onClick={() => setDarkMode(!darkMode)} className={`p-2 backdrop-blur-xl ${darkMode ? 'bg-gray-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>{darkMode ? <Sun className="text-yellow-500" size={18} /> : <Moon className="text-purple-600" size={18} />}</button>
-        <a href="/Resume_Nada_Mousteau.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all flex items-center gap-2 text-sm font-medium"><Download size={14} />CV</a>
+<div className={`min-h-screen ${darkMode ? 'bg-gradient-to-r from-pink-800 via-purple-800 to-blue-8 00 animate-gradient' : 'bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 animate-gradient'} transition-all duration-500 overflow-hidden`}>      
+      <div className="fixed top-6 right-6 flex flex-col items-end gap-2 z-[100]">
+        <div className="flex items-center gap-3">
+          <button onClick={() => setDarkMode(!darkMode)} className={`p-2 backdrop-blur-xl ${darkMode ? 'bg-indigo-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>{darkMode ? <Sun className="text-yellow-500" size={18} /> : <Moon className="text-purple-600" size={18} />}</button>
+          <a href="/Resume_Nada_Mousteau.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all flex items-center gap-2 text-sm font-medium"><Download size={14} />Resume</a>
+        </div>
+        {(stage !== 'desk' || showSkills) && (
+          <button onClick={handleBack} className={`px-4 py-2 backdrop-blur-xl ${darkMode ? 'bg-gray-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all text-sm font-medium border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>← Back</button>
+        )}
       </div>
 
       {/* ==================================================================== */}
