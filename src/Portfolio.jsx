@@ -5,28 +5,11 @@ const Portfolio = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
-  const [stage, setStage] = useState('desk');
-  const [isZooming, setIsZooming] = useState(false);
+  const [stage, setStage] = useState('lockscreen');
   const [openFolder, setOpenFolder] = useState(null);
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [showSkills, setShowSkills] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      if (stage === 'desk') {
-        const { clientX, clientY } = event;
-        const x = (clientX / window.innerWidth - 0.5) * 2;
-        const y = (clientY / window.innerHeight - 0.5) * 2;
-        setMousePos({ x, y });
-      }
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [stage]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -40,8 +23,8 @@ const Portfolio = () => {
   }, []);
 
   const projects = [
+    { id: 'hsbc-alm', name: 'HSBC ALM Simulator (In Progress)', type: 'Python', icon: BarChart3, description: 'ALM simulator to optimize retirement portfolio strategies under stochastic scenarios.', tech: ['Python', 'Stochastic Calculus', 'Portfolio Optimization'], date: 'Oct 2025', color: 'from-red-500 to-orange-500', github: null , report: null },
     { id: 'pairs-trading', name: 'Quantitative Pairs Trading Strategy', type: 'Python', icon: TrendingUp, description: 'Achieved a Sharpe Ratio of 1.60 (+10% RoC) with a backtesting engine developed from scratch.', tech: ['Python', 'NumPy', 'Pandas', 'Z-score'], date: 'Oct 2025', color: 'from-blue-500 to-cyan-500', github: 'https://github.com/nadamousteau/quant-trading-project/blob/main/ArbitrageTrading.ipynb', report: 'https://github.com/nadamousteau/Quant-Trading-Project/blob/main/README.md' },
-    { id: 'hsbc-alm', name: 'HSBC ALM Simulator', type: 'Python', icon: BarChart3, description: 'ALM simulator to optimize retirement portfolio strategies under stochastic scenarios.', tech: ['Python', 'Stochastic Calculus', 'Portfolio Optimization'], date: 'Oct 2025', color: 'from-red-500 to-orange-500', github: null , report: null },
     { id: 'jpmorgan-credit', name: 'J.P. Morgan Credit Risk Model', type: 'Python', icon: Code, description: 'Credit risk model using dynamic programming to estimate PD from FICO scores.', tech: ['Python', 'Dynamic Programming', 'Credit Risk'], date: 'Oct 2025', color: 'from-purple-500 to-pink-500', github: null, report: null },
   ];
 
@@ -51,16 +34,45 @@ const Portfolio = () => {
     { title: 'Forum Trium ENSAE - Vice-President', period: 'May 2025 - Present', description: 'As the lead organizer for Forum Trium 2025, I orchestrated a major event connecting 2,000 students with 200 companies. My responsibilities covered a wide spectrum: I managed and coordinated several cross-functional teams, oversaw the entire logistics chain, and steered the corporate partnership strategy. Alongside these team-based duties, I am solely responsible for implementing the virtual edition on the Seekube platform, a project dedicated to facilitating targeted interviews between students and recruiters.', icon: Briefcase, color: 'from-purple-500 to-pink-500' }
   ];
 
-  const handleLaptopClick = () => { if (stage === 'desk' && !isZooming) { setIsZooming(true); setTimeout(() => { setStage('lockscreen'); setIsZooming(false); }, 1000); } };
+  // ====================================================================
+  // MODIFICATION 1 : Création de la liste "educationEntries"
+  // ====================================================================
+ const educationEntries = [
+    {
+      type: 'degree', // <-- Ajout de cette ligne
+      icon: GraduationCap,
+      color: 'from-indigo-500 to-purple-600',
+      title: 'ENSAE Paris - Engineering Program', 
+      period: '2024 - Present (GPA: 3.9/4.0)', 
+      description: 'Relevant Coursework: Stochastic Calculus, Econometrics, Financial Economics, Machine Learning, Time Series, Python/C++.' 
+    },
+    {
+      type: 'cert', // <-- Ajout de cette ligne
+      icon: FileText,
+      color: 'from-blue-500 to-cyan-500',
+      title: 'Machine Learning in Python with scikit-learn', 
+      period: 'INRIA (2025)', 
+      description: 'Certification on machine learning principles and practical implementation using scikit-learn.'
+    },
+    {
+      type: 'cert', // <-- Ajout de cette ligne
+      icon: FileText,
+      color: 'from-green-500 to-emerald-500',
+      title: 'Foundations of Finance', 
+      period: 'University of Cambridge via EDX (Sep 2024)', 
+      description: 'Certification covering core concepts in finance, valuation, and investment.'
+    }
+  ];
+
   const handleUnlock = () => setStage('desktop');
   const handleFolderClick = (folderId) => { setOpenFolder(folderId); setSelectedFile(null); setStage('folder'); };
   const handleIconClick = (icon) => { (icon.type === 'mail') ? handleFolderClick('contact') : handleFolderClick(icon.id); };
+  
   const handleBack = () => {
     if (showSkills) setShowSkills(false);
     else if (selectedFile) setSelectedFile(null);
     else if (stage === 'folder') { setOpenFolder(null); setSelectedFile(null); setStage('desktop'); }
     else if (stage === 'desktop') setStage('lockscreen');
-    else if (stage === 'lockscreen') setStage('desk');
   };
 
   const desktopIcons = [
@@ -75,63 +87,21 @@ const Portfolio = () => {
   );
 
   return (
-<div className={`min-h-screen ${darkMode ? 'bg-gradient-to-r from-pink-800 via-purple-800 to-blue-8 00 animate-gradient' : 'bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 animate-gradient'} transition-all duration-500 overflow-hidden`}>      
+<div className={`min-h-screen ${darkMode ? 'bg-gradient-to-r from-pink-800 via-purple-800 to-blue-8 00 animate-gradient' : 'bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 animate-gradient'} transition-all duration-500 overflow-hidden`}> 
       <div className="fixed top-6 right-6 flex flex-col items-end gap-2 z-[100]">
         <div className="flex items-center gap-3">
           <button onClick={() => setDarkMode(!darkMode)} className={`p-2 backdrop-blur-xl ${darkMode ? 'bg-indigo-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>{darkMode ? <Sun className="text-yellow-500" size={18} /> : <Moon className="text-purple-600" size={18} />}</button>
           <a href="/portfolio/Resume_Nada_Mousteau.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all flex items-center gap-2 text-sm font-medium"><Download size={14} />Resume</a>
         </div>
-        {(stage !== 'desk' || showSkills) && (
+        {(stage === 'desktop' || stage === 'folder' || showSkills) && (
           <button onClick={handleBack} className={`px-4 py-2 backdrop-blur-xl ${darkMode ? 'bg-gray-800/90' : 'bg-white/90'} rounded-full shadow-2xl hover:scale-105 transition-all text-sm font-medium border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>← Back</button>
         )}
       </div>
 
-      {/* ==================================================================== */}
-      {/* SECTION MODIFIÉE : DESK VIEW                                        */}
-      {/* ==================================================================== */}
-      {stage === 'desk' && !showSkills && (
-        <div 
-          className="w-full h-screen relative flex flex-col items-center justify-center cursor-pointer group"
-          onClick={handleLaptopClick}
-        >
-          {/* Fond animé */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <div className={`absolute inset-[-200%] animate-spin-slow ${darkMode ? 'opacity-30' : 'opacity-100'}`}>
-              <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200 dark:bg-purple-900 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-200 dark:bg-blue-900 rounded-full blur-3xl"></div>
-            </div>
-          </div>
-          
-          {/* Ordinateur (maintenant de grande taille) */}
-          <div className="relative z-10 w-full max-w-4xl group-hover:scale-105 transition-transform duration-300">
-            {/* Écran avec effet de verre dépoli */}
-            <div className={`aspect-[16/10] ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} rounded-t-2xl p-4 shadow-2xl`}>
-              <div className="w-full h-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg flex items-center justify-center relative overflow-hidden">
-                {/* Flou en arrière-plan */}
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 blur-md"></div>
-                <div className="absolute inset-0 bg-black/20"></div>
-
-                {/* Message de bienvenue */}
-                <div className={`text-center transition-opacity duration-300 ${isZooming ? 'opacity-0' : 'opacity-80 group-hover:opacity-100'}`}>
-                    <div className="w-24 h-24 mx-auto mb-4 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-lg">NM</div>
-                    <h1 className="text-2xl font-bold text-white">Nada Mousteau</h1>
-                    <p className="text-sm text-white/80 mt-1">Click to discover my portfolio</p>
-                </div>
-              </div>
-            </div>
-            {/* Base du clavier */}
-            <div className={`w-full h-6 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'} rounded-b-2xl`}></div>
-          </div>
-        </div>
-      )}
-
-      {/* ==================================================================== */}
-      {/* LE RESTE DU CODE EST INCHANGÉ                                      */}
-      {/* ==================================================================== */}
       {(stage === 'lockscreen' || stage === 'desktop' || stage === 'folder') && !showSkills && (
         <div className="fixed inset-0 flex items-center justify-center p-8 z-40">
-          <div className={`w-full max-w-4xl ${darkMode ? 'bg-gray-800' : 'bg-gray-300'} rounded-2xl shadow-2xl relative border-8 ${darkMode ? 'border-gray-900' : 'border-gray-400'}`}>
-            <div className="rounded-t-xl overflow-hidden" style={{ height: '90vh' }}>
+          <div className={`w-full max-w-4xl ${darkMode ? 'bg-gray-800' : 'bg-gray-300'} rounded-2xl shadow-2xl relative border-[18px] ${darkMode ? 'border-gray-900' : 'border-gray-400'}`}>
+            <div className="rounded-t-2xl overflow-hidden" style={{ height: '90vh' }}>
               {stage === 'lockscreen' && (
                 <div className="h-full relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600"></div>
@@ -181,22 +151,66 @@ const Portfolio = () => {
               )}
               {stage === 'folder' && openFolder && (
                 <div className="h-full p-4" style={{ backgroundColor: darkMode ? '#0f172a' : '#ddd6fe' }}>
-                  {!selectedFile ? (
-                    <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-xl h-full overflow-hidden flex flex-col`}>
-                      <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} px-4 py-2 flex items-center justify-between border-b ${darkMode ? 'border-gray-600' : 'border-gray-200'} flex-shrink-0`}>
-                        <div className="flex items-center gap-2"><Folder className="text-blue-500" size={20} /><h3 className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{desktopIcons.find(i => i.id === openFolder)?.name}</h3></div>
-                        <button onClick={handleBack} className="w-6 h-6 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center transition-all"><X size={14} className="text-white" /></button>
-                      </div>
-                      <div className="p-4 space-y-2 overflow-y-auto">
-                        {openFolder === 'projects' && projects.map((project) => (<div key={project.id} onClick={() => setSelectedFile(project)} className={`${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} p-4 rounded-lg cursor-pointer transition-all flex items-center gap-4`}><div className={`w-10 h-10 bg-gradient-to-br ${project.color} rounded flex items-center justify-center flex-shrink-0`}><project.icon size={22} className="text-white" /></div><div><p className={`font-semibold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>{project.name}</p><p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{project.type}</p></div></div>))}
-                        {openFolder === 'experience' && experiences.map((exp, i) => (<div key={i} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-lg shadow-md border ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}><div className="flex items-start gap-3 mb-2"><div className={`w-12 h-12 bg-gradient-to-br ${exp.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}><exp.icon size={24} className="text-white" /></div><div className="flex-1"><p className={`font-bold text-sm mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{exp.title}</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{exp.period}</p></div></div><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{exp.description}</p></div>))}
-                        {openFolder === 'education' && (<div className="space-y-4 pt-2"><div className={`${darkMode ? 'bg-gray-700' : 'bg-indigo-50'} p-6 rounded-xl shadow-md`}><div className="flex items-center gap-4 mb-4"><div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg"><GraduationCap size={32} className="text-white" /></div><div><h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>ENSAE Paris</h3><p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Engineering Program • 2024 - Present</p><p className={`text-sm font-semibold ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`}>GPA: 3.9/4.0</p></div></div><div className="flex flex-wrap gap-2">{['Stochastic Calculus', 'Econometrics', 'Financial Economics', 'Machine Learning', 'Time Series', 'Python/C++'].map((course, i) => (<span key={i} className={`text-xs px-3 py-1 rounded-full ${darkMode ? 'bg-gray-600 text-gray-200' : 'bg-white text-gray-700'}`}>{course}</span>))}</div></div></div>)}
-                        {openFolder === 'contact' && (<div className="space-y-3 pt-2"><a href="mailto:nada.mousteau@ensae.fr" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center"><Mail size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>Email</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>nada.mousteau@ensae.fr</p></div></a><a href="https://github.com/nadamousteau" target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center"><Github size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>GitHub</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>github.com/nadamousteau</p></div></a><a href="https://linkedin.com/in/nadamousteau" target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center"><Linkedin size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>LinkedIn</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>linkedin.com/in/nadamousteau</p></div></a></div>)}
-                      </div>
+                  
+                  {/* 1. Ce "cadre de fenêtre" est maintenant TOUJOURS visible */}
+                  <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-xl h-full overflow-hidden flex flex-col`}>
+                    
+                    {/* 2. La "barre supérieure" est aussi TOUJOURS visible */}
+                    <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} px-4 py-2 flex items-center justify-between border-b ${darkMode ? 'border-gray-600' : 'border-gray-200'} flex-shrink-0`}>
+                      
+                      {/* 3. Le titre est maintenant dynamique : il montre le nom du dossier OU le nom du fichier */}
+                      {!selectedFile ? (
+                        <div className="flex items-center gap-2">
+                          <Folder className="text-blue-500" size={20} />
+                          <h3 className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{desktopIcons.find(i => i.id === openFolder)?.name}</h3>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 truncate">
+                          {/* L'icône est maintenant aussi dynamique */}
+                          <selectedFile.icon size={18} className="text-blue-500 flex-shrink-0" />
+                          <h3 className={`font-bold truncate ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {/* Les projets ont .name, les autres ont .title */}
+                            {selectedFile.name || selectedFile.title}
+                          </h3>
+                        </div>
+                      )}
+                      
+                      {/* 4. Le bouton X est TOUJOURS visible. handleBack gérera le retour (soit à la liste, soit au bureau) */}
+                      <button onClick={handleBack} className="w-6 h-6 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center transition-all flex-shrink-0"><X size={14} className="text-white" /></button>
                     </div>
-                  ) : (
-                    renderFileContent(selectedFile)
-                  )}
+
+                    {/* 5. Le contenu intérieur est maintenant scrollable et change en fonction de 'selectedFile' */}
+                    <div className="overflow-y-auto h-full">
+                      {!selectedFile ? (
+                        // C'est votre code de liste, maintenant DANS la fenêtre
+                        <div className="p-4 space-y-2">
+                          {openFolder === 'projects' && projects.map((project) => (<div key={project.id} onClick={() => setSelectedFile(project)} className={`${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} p-4 rounded-lg cursor-pointer transition-all flex items-center gap-4`}><div className={`w-10 h-10 bg-gradient-to-br ${project.color} rounded flex items-center justify-center flex-shrink-0`}><project.icon size={22} className="text-white" /></div><div><p className={`font-semibold text-lg ${darkMode ? 'text-white' : 'text-gray-900'}`}>{project.name}</p><p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{project.type}</p></div></div>))}
+                          
+                          {openFolder === 'experience' && experiences.map((exp, i) => (<div key={i} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} p-4 rounded-lg shadow-md border ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}><div className="flex items-start gap-3 mb-2"><div className={`w-12 h-12 bg-gradient-to-br ${exp.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}><exp.icon size={24} className="text-white" /></div><div className="flex-1"><p className={`font-bold text-sm mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{exp.title}</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{exp.period}</p></div></div><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{exp.description}</p></div>))}
+                          
+                          {openFolder === 'education' && educationEntries.map((edu, i) => (
+                            <div key={i} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} ${edu.type === 'degree' ? 'p-4' : 'p-3'} rounded-lg shadow-md border ${darkMode ? 'border-gray-600' : 'border-gray-200'}`}>
+                              <div className="flex items-start gap-3 mb-2">
+                                <div className={`${edu.type === 'degree' ? 'w-14 h-14' : 'w-10 h-10'} bg-gradient-to-br ${edu.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                                  <edu.icon size={edu.type === 'degree' ? 24 : 20} className="text-white" />
+                                </div>
+                                <div className="flex-1">
+                                  <p className={`font-bold text-sm mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{edu.title}</p>
+                                  <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{edu.period}</p>
+                                </div>
+                              </div>
+                              <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{edu.description}</p>
+                            </div>
+                          ))}
+                          
+                          {openFolder === 'contact' && (<div className="space-y-3 pt-2"><a href="mailto:nada.mousteau@ensae.fr" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center"><Mail size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>Email</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>nada.mousteau@ensae.fr</p></div></a><a href="https://github.com/nadamousteau" target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center"><Github size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>GitHub</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>github.com/nadamousteau</p></div></a><a href="https://linkedin.com/in/nadamousteau" target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'} transition-all shadow-md`}><div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center"><Linkedin size={20} className="text-white" /></div><div><p className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>LinkedIn</p><p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>linkedin.com/in/nadamousteau</p></div></a></div>)}
+                        </div>
+                      ) : (
+                        // C'est votre vue "détail", maintenant DANS la fenêtre
+                        renderFileContent(selectedFile)
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -228,8 +242,6 @@ const Portfolio = () => {
       )}
 
       <style>{`
-        @keyframes zoom-laptop { from { transform: scale(1); } to { transform: scale(1.8); } }
-        .animate-zoom-laptop { animation: zoom-laptop 1s ease-in-out forwards; }
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spin-slow 40s linear infinite; }
       `}</style>
