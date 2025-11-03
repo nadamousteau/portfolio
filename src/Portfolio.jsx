@@ -40,9 +40,9 @@ const Portfolio = () => {
   }, []);
 
   const projects = [
-    { id: 'pairs-trading', name: 'Quantitative Pairs Trading Strategy', type: 'Python', icon: TrendingUp, description: 'Achieved a Sharpe Ratio of 1.41 (+168% RoC) with a backtesting engine developed from scratch.', tech: ['Python', 'NumPy', 'Pandas', 'Z-score'], date: 'Oct 2025', color: 'from-blue-500 to-cyan-500', github: 'https://github.com/nadamousteau/pairs-trading-strategy', report: 'https://github.com/nadamousteau/pairs-trading-strategy/blob/main/REPORT.md' },
-    { id: 'hsbc-alm', name: 'HSBC ALM Simulator', type: 'Python', icon: BarChart3, description: 'ALM simulator to optimize retirement portfolio strategies under stochastic scenarios.', tech: ['Python', 'Stochastic Calculus', 'Portfolio Optimization'], date: 'Oct 2025', color: 'from-red-500 to-orange-500', github: 'https://github.com/nadamousteau/hsbc-alm-simulator', report: null },
-    { id: 'jpmorgan-credit', name: 'J.P. Morgan Credit Risk Model', type: 'Python', icon: Code, description: 'Credit risk model using dynamic programming to estimate PD from FICO scores.', tech: ['Python', 'Dynamic Programming', 'Credit Risk'], date: 'Oct 2025', color: 'from-purple-500 to-pink-500', github: 'https://github.com/nadamousteau/jpmorgan-credit-risk', report: null },
+    { id: 'pairs-trading', name: 'Quantitative Pairs Trading Strategy', type: 'Python', icon: TrendingUp, description: 'Achieved a Sharpe Ratio of 1.60 (+10% RoC) with a backtesting engine developed from scratch.', tech: ['Python', 'NumPy', 'Pandas', 'Z-score'], date: 'Oct 2025', color: 'from-blue-500 to-cyan-500', github: 'https://github.com/nadamousteau/quant-trading-project/blob/main/ArbitrageTrading.ipynb', report: 'https://github.com/nadamousteau/Quant-Trading-Project/blob/main/README.md' },
+    { id: 'hsbc-alm', name: 'HSBC ALM Simulator', type: 'Python', icon: BarChart3, description: 'ALM simulator to optimize retirement portfolio strategies under stochastic scenarios.', tech: ['Python', 'Stochastic Calculus', 'Portfolio Optimization'], date: 'Oct 2025', color: 'from-red-500 to-orange-500', github: null , report: null },
+    { id: 'jpmorgan-credit', name: 'J.P. Morgan Credit Risk Model', type: 'Python', icon: Code, description: 'Credit risk model using dynamic programming to estimate PD from FICO scores.', tech: ['Python', 'Dynamic Programming', 'Credit Risk'], date: 'Oct 2025', color: 'from-purple-500 to-pink-500', github: null, report: null },
   ];
 
   const experiences = [
