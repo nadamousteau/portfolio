@@ -149,7 +149,7 @@ const Portfolio = () => {
                         <p className="text-white/85 text-xs">ENSAE Paris • 2nd year \ Expected 2027 graduation </p>
                         <div className="pt-2 space-y-2">
                           <p className="text-white/95 font-semibold text-sm">Looking for gap year internship (6 months starting in June 2026)</p>
-                          <p className="text-white/80 text-xs leading-relaxed">ok .</p>
+                          <p className="text-white/80 text-xs leading-relaxed">Discover my profile</p>
                         </div>
                       </div>
                       <button onClick={handleUnlock} className="mx-auto w-24 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-lg rounded-full font-semibold transition-all border-2 border-white/40 flex items-center justify-center group shadow-xl">
